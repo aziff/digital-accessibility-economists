@@ -1,0 +1,9 @@
+---
+title: "Checklist for LaTeX Accessibility"
+---
+
+LaTeX compiles to PDFs, which can have accessibility issues such as lack of tagging, improper structure, or incompatibility with screen readers. There are expected updates to help ease making LaTeX-compiled PDFs fully compliant.
+
+1. Include additional packages and commands for [LaTeX: Article Accessibility](#tagpdf_1). If you are converting a Beamer document, see [LaTeX: Beamer Accessibility](#c_beamer)
+
+2. Check through the common [Accessibility Issues](#access_issues) to ensure that the end product is accessible.

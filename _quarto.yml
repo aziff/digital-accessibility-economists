@@ -1,0 +1,45 @@
+project:
+  type: book
+
+book:
+  cover-image: cover.png
+  cover-image-alt: "cover image for notes on Digital Accessibility: Code Notebooks and LaTeX by Xinqi Xu and Anna Ziff"
+  title: "Digital Accessibility for Code Notebooks and LaTeX"
+  author: "Xinqi Xu and Anna Ziff"
+  date: "2025/7/18"
+  chapters: 
+    - index.qmd
+    - part: "Generate An Accessible Quarto Book"
+      chapters:
+      - 01_Checklist_for_Quarto_Accessible_Book.qmd
+      - 02_Create_Quarto_Book.qmd
+      - 03_Converting_Markdown_to_Quarto.qmd
+      - 04_Color_Contrast.qmd
+      - 05_Structure.qmd
+      - 06_Alt_Text.qmd
+      - 07_Math.qmd
+      - 08_ARIA_label.qmd
+    - part: "Generate Accessible PDF from LaTeX"
+      chapters: 
+      - 09_Checklist_for_LaTeX_Accessibility.qmd
+      - 10_Converting_Article.qmd
+      - 11_Converting_Beamer.qmd
+      - LaTeX_Accessibility_Issues.qmd
+    
+    - part: "Accessibility Tools and Resources"
+      chapters: 
+      - Accessibility_Issue_Checklist.qmd
+      - Accessibility_Checker.qmd
+      - Issue_Check_List.qmd
+      - TAMU_Resources.qmd
+    
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+  
+editor: visual
+

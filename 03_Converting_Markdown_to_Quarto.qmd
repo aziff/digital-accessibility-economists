@@ -1,0 +1,95 @@
+---
+title: "Creating a Quarto Book Based on R Markdown"
+---
+
+## Overview: Quarto and R Markdown {#convert_Q}
+
+Quarto renders books using Pandoc to transform Markdown. This allows for a streamlined conversion from R Markdown to Quarto. Click [here](https://quarto.org/docs/authoring/markdown-basics.html#overview) to see more. 
+
+## From R Markdown to Quarto
+
+Suppose you already have content organized in R Markdown files and want to convert and gather them to create a book, website, or other output using Quart. Small changes in the syntax and directory structure allow for this conversion.
+
+### Convert `.md` Files to `.qmd` Files
+
+First, change the file extensions from `.Rmd` to `.qmd`. Then, change the YAML headers:
+
+``` yaml
+---
+title:"Chapter Title Here"
+format: html
+---
+```
+
+Ensure the folder contains `index.qmd` and `_quarto.yml` (see [Chapter 2](#create_quarto_book)). All the `.qmd` files should be listed in the chapters of `_quarto.yml`. Render the book to preview your converted content.
+
+### Syntax
+
+Quarto can read the majority of R Markdown syntax directly. There are some minor differences. We list them below. 
+
+#### Code Chunks
+
+Quarto can read R Markdown's code chunk syntax, but it also has its own style.
+
+Markdown:
+```markdown
+{r, fig.cap = "", fig.alt= ""}
+plot()
+```
+
+Quarto: 
+```markdown
+{r,eval= FALSE}
+#| label: Label
+#| fig-cap: Caption
+#| fig-alt: Alternative text
+plot()
+```
+
+You can copy Markdown code chunks directly to `.qmd` files without changing them to the Quarto style. However, do not mix styles in the same file. If there is a mixture of styles, Quarto will only read the ones with Quarto syntax. Click [here](https://quarto.org/docs/authoring/markdown-basics.html) to learn more about Quarto's Markdown basics.
+
+#### LaTeX
+
+It is possible to use Quarto to render a PDF file with LaTeX syntax. Quarto uses a LaTeX engine to output PDF format file. 
+
+<!-- But if you use Quarto output HTML format, be careful with LaTeX commands. -->
+
+1. Math
+
+The LaTeX mathematical environments and syntax are supported in Quarto. You can copy LaTeX math code into a `.qmd` file.
+
+2. LaTeX Text Commands
+
+LaTeX document structure or formatting control commands are not valid in Quarto's markdown body when converting to HTML. The reason is that Quarto is based on Pandoc Markdown, and text styles are recommended to use Markdown syntax. For example, do not use:`\textbf{}` or `\textit{}` in the main text. Instead, use Markdown syntax: `**bold**` or `*italic*`.
+
+3. References
+
+Be careful with the reference syntax. When you make ref, you have to rewrite them in a Quarto syntax instead of LaTeX reference commands to make sure it referred correctly. (Is in ECON470 only have 2 eqref?)
+
+This table shows the relative reference commands between LaTeX and Quarto:
+```{r, echo=FALSE}
+library(readxl)
+library(knitr)
+
+df <- read_excel("table/Reference.xlsx")
+kable(df, escape = TRUE)
+```
+
+Click [here](https://quarto.org/docs/authoring/cross-references.html#references) to see more about in-text references in Quarto.
+
+<!-- #### Tips -->
+
+<!-- The following are tips that might be useful when converting Markdown to Quarto. -->
+
+<!-- 1.Replace: -->
+
+<!-- Example: when you try to replace `texttt{}` at once in one file: -->
+
+<!-- In R, click `Find/Replace`, Insert `\\texttt\{((?:[^{}]|\{[^{}]*\})*)\}` then replace with `\1` -->
+
+
+
+
+
+
+

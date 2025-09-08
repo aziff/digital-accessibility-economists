@@ -1,0 +1,168 @@
+---
+title: "Create a Quarto Book"
+---
+
+## Set Up {#create_quarto_book}
+
+### Install Quarto
+
+1.  Download and install: click [here](https://quarto.org/docs/get-started/) to install Quarto onto your operating system. There are versions for Mac OS, Windows, and different distributions of Linux.
+
+2. You may use Quarto with RStudio, Jupyter, VS Code, Positron, Neovim, or Text Editor. We focus on implementation in RStudio in these notes. Similar instructions for Jupyter are forthcoming. 
+
+
+If you are using RStudio, you must check if Quarto is recognized in RStudio: Open RStudio and run:
+
+``` bash
+quarto::quarto_path()
+```
+
+If it returns a file path, it means RStudio can detect Quarto. An optional step is to install the Quarto R helper package. This allows you to render (i.e., compile) the document using point-and-click functions in RStudio's GUI as well as other integration features. 
+
+```{r eval=FALSE}
+installed.packages("quarto")
+```
+
+3. Verify installation of Quarto in the command line of your computer:
+
+``` bash
+quarto --version
+```
+
+## Create a Website Using RStudio
+
+The below steps show how to create a website using Quarto. 
+
+### Create a New Book Project
+
+These instructions are to create a new
+
+1. Open RStudio. 
+
+2. Go to File \> New Project \> New Directory. 
+
+![Open New Project...](Figures/Creating_New_Project_1)
+
+![Click on New Directory](Figures/Creating_New_Project_2)
+
+3. Choose the project type. In these instructions, we create a Quarto book (see this [book](https://aziff.github.io/data-science-for-economic-and-social-issues.github.io/) for an example). Even though it is called a "book," it can be published as a website. Even as a website, it maintains its chapter organization. 
+
+    * Quarto Project. The most generic type that can be specialized later into the other types.
+    * Quarto Website. Select this to create a website that follows traditional formatting, such as a navigation bar and site-wide theme. For example, this may be appropriate for a personal website for academics.
+    * Quarto Book. The output of this can also be a website (or a PDF), but the structure follows chapters. Consistent with book formatting, there is the option to create table of contents, section number, etc.
+    * Quarto Manuscript. This type is designed for academic papers intended for submission to journals. There are some journal-specific contents.
+    * Quarto Blog. This is a specific type with posts corresponding to blog organization.
+
+![Create a Quarto Book](Figures/Creating_New_Project_3){width="40%"}
+
+4. Name your project and choose the location. For now, this name will be the title. You can adjust this later. 
+
+![Save the Project](Figures/Creating_New_Project_4){width="40%"}
+
+5. Click create project. After creating the project, you will see the following files:   
+      * `_quarto.yml`: Configuration file.
+      * `index.qmd`: Homepage (preface).
+      * `.quarto folder`: This hidden folder contains internal or cached files. If you are going to turn your project into a Git repository, add `.quarto` to the `.gitignore`.
+      * Example project files: 
+          * `cover.png`: Cover that will show up on the homepage.
+          * `intro.qmd` and `summary.qmd`: Example chapters.
+          * `references.bib` and `references.qmd`: An example of how to format references.
+
+The next step is to edit the configuration file. 
+
+### Edit the Configuration File (\_quarto.yml)
+
+The configuration file dictates information about the project, including the title, author, date, but also the order the chapters, bibliography information, and visual themes. Open \_quarto.yml in RStudio or another text editor. Importantly, as you update the content of the chapters (e.g., summary.qmd below), you must manually add the chapters here. Follow the same indent structure, as YAML is sensitive to whitespace.
+
+``` yaml
+project:
+  type: book
+
+book:
+  title: "Your Title Here"
+  author: "Author Names"
+  date: "Date"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+```
+
+See [Quarto Project Basics](https://quarto.org/docs/projects/quarto-projects.html) to learn how the files interact with each other. [This chapter](https://quarto.org/docs/books/book-structure.html#creating-an-index) explains each element of the configuration file in more detail.
+
+### Homepage (index.qmd)
+
+Write your preface in index.qmd. This is the first page that will appear once you publish the book. The body of the document can contain whatever content you wish. Just make sure the following line is the first line:
+
+```markdown
+# Preface {.unnumbered}
+```
+
+If you want to include a cover, save a new cover.png with your preferred image. This will appear on the homepage. Add the options `cover-image` and `cover-image-alt` to `_quarto.yml` under book, following the indentation rules.
+
+``` yaml
+
+book:
+  cover-image: cover.png
+  cover-image-alt: "alternative text for cover"
+```
+
+### References
+
+Use your preferred method to generate a BibTeX bibliography called `reference.bib`. If you rename the file, change it in `_quarto.yml`. [This chapter](https://quarto.org/docs/books/book-structure.html#references) includes more information on editing `references.qmd`.
+
+
+### Render the Book
+
+While adding content to the chapters (`.qmd` files), you can preview the book by rendering it. There are two main ways to render the book.
+
+The first option is to use the command line of your computer. Navigate to the book's directory and run:
+
+``` bash
+quarto render
+```
+
+If you want to render to a PDF, run:
+
+``` bash
+quarto render --to pdf
+```
+
+The second option is to use the console in RStudio:
+
+``` bash
+quarto::quarto_render()
+```
+
+## Convert Markdown to Quarto
+
+The above instructions allow you to create a new book. What if you already have materials in R Markdown format? The instructions for converting those materials to a Quarto website are in  [Chapter 3](#convert_Q).
+
+## Publish the Quarto Book to a Website
+
+To publish the book, click [here](https://quarto.org/docs/publishing/) to see more
+
+[Quarto Pub](https://quarto.org/docs/publishing/quarto-pub.html)
+
+[Github Pages](https://quarto.org/docs/publishing/github-pages.html)
+
+<!-- ## Digital Accessibility -->
+
+<!-- To make Website book accessible, view following sections to meet Accessibility Standard -->
+
+### Resources
+
+These notes follow the [Quarto guide](https://quarto.org/docs/authoring/markdown-basics.html) closely. Another useful resource is [Quarto for scientists](https://qmd4sci.njtierney.com/).

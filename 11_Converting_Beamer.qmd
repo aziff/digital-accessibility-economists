@@ -1,0 +1,203 @@
+---
+title: "LaTeX: Beamer Accessibility"
+---
+
+Currently, beamer has limited support for accessibility. One option is to convert a beamer document to an article class and then use the tagpdf to add accessibility tags. Another option is to compile it to HTML instead of PDF, which allows for more accessible web content. A newer method is to use the ltx-talk class, which works with beamer-style commands like `\begin{frame}` and also supports tagpdf. This gives you more flexibility while still improving accessibility.
+
+## Convert Beamer to Article {#c_beamer}
+
+### Instructions
+
+When converting a Beamer presentation to an article, it is best to do it manually to make sure the structure is clear and logical. Beamer and article have different layouts, so some parts of the code will not work in the article format.
+
+Beamer commands that are not compatible with article:
+
+`\begin{frame}...\end{frame}`
+
+`\frametitle{...}`
+
+`\framesubtitle{...}`
+
+`\pause`
+
+`\alert{...}`
+
+`\only{...}`
+
+`\visible{...}`
+
+Overlay specifications like \<1-\>
+
+### Tips
+
+Replace each `\begin{frame}` block with a section or paragraph.
+
+Use `\section` or `\subsection` to mark the structure.
+
+Convert slide titles (`\frametitle`) into section headers or bold text.
+
+Remove overlay commands (`\pause`, `<1->`,etc.) as they are not meaningful in articles.
+
+Keep the logical order of content and avoid slide based thinking write in continuous text.
+
+### tagpdf {#tagpdf}
+
+Once you have converted the Beamer file to an article format, you can use tagpdf to meet accessibility requirements.
+
+See [tagpdf](#tagpdf)
+
+## Convert Beamer to HTML
+
+You can convert LaTeX documents into HTML using one of the following tools:
+
+1.Pandoc
+
+2.TeX4ht
+
+3.LaTeXML
+
+We'll introduce how to use Pandoc to convert mainly.
+
+### Pandoc
+
+#### Before starting convert
+
+Make sure your `.tex` file is ready: Use proper heading levels(`\section`,`\subsection`, no skipping levels) Add Alt Text to all images Set up tables correctly (avoid using layout tables) Handle unsupported math symbols for MathJax [MathJax limits](https://docs.mathjax.org/en/latest/input/tex/index.html) If it's convenient, convert all TikZ graphics to image format to avoid HTML rendering issues
+
+#### Installation
+
+Click [here](https://pandoc.org/installing.html) to install Pandoc
+
+#### Environment Setup
+
+Use Bash or any shell environment.
+
+You can write a script to convert multiple files in a project.
+
+#### Write your conversion script
+
+The Example code shown below converts a whole LaTeX files project to HTML files
+
+Example code (Bash)
+
+``` bash
+#!/bin/bash
+
+# Define folders
+FOLDER="your file path"
+OUTPUT_FOLDER="output file path"
+
+# Create output folder if it doesn't exist
+mkdir -p "$OUTPUT_FOLDER"
+
+# Define bibliography path
+BIB_PATH="your reference file"
+
+# Loop through all .tex files recursively
+find "$FOLDER" -type f -name "*.tex" | while read file; do
+    # Get path relative to root folder
+    rel_path="${file#$FOLDER/}"
+    rel_dir=$(dirname "$rel_path")
+    filename=$(basename "$file" .tex)
+
+    # Make corresponding output directory
+    mkdir -p "$OUTPUT_FOLDER/$rel_dir"
+   
+    # get the directory of the .tex file
+    file_dir=$(dirname "$file")
+
+    #run pandoc inside .tex file's folder
+    ( cd "$file_dir" 
+    
+    # Convert to HTML with math, citations, figures, LaTeX style HTML settings (CSS) 
+    pandoc "$file" -s -o "$OUTPUT_FOLDER/$rel_dir/$filename.html" --mathjax --citeproc --bibliography="$BIB_PATH" --extract-media="$OUTPUT_FOLDER/$rel_dir" --css=../../style.css --metadata=lang:en
+
+    # Convert to Markdown 
+    pandoc "$file" -t markdown -s -o "$OUTPUT_FOLDER/$rel_dir/$filename.md"
+    )
+done
+
+echo "All files have been converted to HTML and saved in $OUTPUT_FOLDER"
+```
+
+#### Important Notes
+
+1 Math: Add Pandoc option `--mathjax` to support math render in HTML so that Math expression could be properly shown by HTML
+
+``` bash
+Pandoc .tex -s -o .html --mathjax
+```
+
+2 Figures & Graphs:
+
+When you generate figures&graphs, remember use `.png` or `.jpg`, not `.pdf` (HTML can't read PDF picture). If you use PDF to show figures, please convert them into picture format first.
+
+Add alt text to all images. See [Alt Text](#alt_text) to add alt text for figures.
+
+3 TikZ:
+
+TikZ is Not supported in HTML directly
+
+(1) Convert TikZ contents to pictures first, then plug them back to LaTeX file
+
+(2) Use standlone
+
+(3) Convert TikZ picture to SVG form.
+
+Resources:
+[Covert LaTeX document containing TikZ pictures' discussion](https://github.com/jgm/pandoc/discussions/10590)
+
+[covert Tikz discussion](https://stackoverflow.com/questions/79393445/how-do-i-convert-a-latex-document-containing-tikz-pictures-to-html)
+[TikZJax](https://tikzjax.com/)(covert script tags(containing TikZ code) into SVGs)
+
+4  Citations:
+
+You need to add 2 Pandoc citation options to convert LaTeX citations into readable citations in HTML output:
+
+``` bash
+# Convert to HTML
+    pandoc "$file" -s -o "$OUTPUT_FOLDER/$rel_dir/$filename.html" --citeproc --bibliography="$BIB_PATH"  
+```
+
+[Pandoc Manual - Citations](https://pandoc.org/MANUAL.html#citations)
+
+5.Layout:
+
+You can use this CSS to get LaTeX-style HTML: [LaTeX.css](https://github.com/vincentdoerig/latex-css/blob/master/style.css)
+
+6.  Convert to markdown files
+
+Convert original LaTeX files to markdown files is not necessary, but it may make it easier to fix certain accessibility issues by using markdown than handling directly in LaTeX.
+
+``` bash
+pandoc "$file" -t markdown -s -o "$OUTPUT_FOLDER/$rel_dir/$filename.md"
+```
+
+### TeX4ht
+
+TeX4ht is another tool to convert LaTeX file to HTML.
+
+[TeX4ht](https://www.tug.org/tex4ht/index.html)
+
+### LaTeXML
+
+LaTeXML could also convert LaTeX file to HTML.
+
+[LaTeXML](https://math.nist.gov/~BMiller/LaTeXML/)
+
+## Convert Beamer to Itk-talk
+
+Itk-talk is not released yet.
+
+.....
+
+## Resources
+
+([Here](https://www.reddit.com/r/LaTeX/comments/1fae8it/a_way_to_convert_latex_to_html/) is some discussions about converting LaTeX file to HTML)
+
+[Converting LaTeX to HTML: technical notes](https://richardzach.org/2023/07/converting-latex-to-html-technical-notes/)
+
+[Pandoc](https://pandoc.org/MANUAL.html)
+
+[Mathjax](https://docs.mathjax.org/en/latest/index.html)
+

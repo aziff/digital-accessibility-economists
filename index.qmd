@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This website contains notes to improve digital accessibility of code notebooks and LaTeX. These notes are designed to be used alongside other materials on digital accessibility, which we link throughout the chapters.  
+
+**Note that this website is under construction and includes some preliminary notes.** Check back for updates and please email us (aziff "at" tamu.edu, xinqixu "at" tamu.edu) with any errors. 
