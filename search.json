@@ -1,0 +1,573 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Digital Accessibility for Code Notebooks and LaTeX",
+    "section": "",
+    "text": "Preface\nThis website contains notes to improve digital accessibility of code notebooks and LaTeX. These notes are designed to be used alongside other materials on digital accessibility, which we link throughout the chapters.\nNote that this website is under construction and includes some preliminary notes. Check back for updates and please email us (aziff “at” tamu.edu, xinqixu “at” tamu.edu) with any errors.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "01_Checklist_for_Quarto_Accessible_Book.html",
+    "href": "01_Checklist_for_Quarto_Accessible_Book.html",
+    "title": "1  Checklist for Quarto Accessible Book",
+    "section": "",
+    "text": "Quarto is a powerful tool to compile and publish code notebooks to a wide variety of formats, including websites. Below are the broad steps to use Quarto to improve the digital accessibiilty of code notebooks.\n\nCreate a new Quarto book. If you are converting materials from R Markdown to Quart, see Chapter 3: Creating a Quarto Book from R Markdown.\nMake adjustments to ensure that the final document complies with digital accessibility requirements. Go through each of these requirements to ensure compliance.\n\nColor Contrast\nStructure\nAlternative Text\nAccessible Math\nAria\nTables",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Checklist for Quarto Accessible Book</span>"
+    ]
+  },
+  {
+    "objectID": "02_Create_Quarto_Book.html",
+    "href": "02_Create_Quarto_Book.html",
+    "title": "2  Create a Quarto Book",
+    "section": "",
+    "text": "2.1 Set Up",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Create a Quarto Book</span>"
+    ]
+  },
+  {
+    "objectID": "02_Create_Quarto_Book.html#create_quarto_book",
+    "href": "02_Create_Quarto_Book.html#create_quarto_book",
+    "title": "2  Create a Quarto Book",
+    "section": "",
+    "text": "2.1.1 Install Quarto\n\nDownload and install: click here to install Quarto onto your operating system. There are versions for Mac OS, Windows, and different distributions of Linux.\nYou may use Quarto with RStudio, Jupyter, VS Code, Positron, Neovim, or Text Editor. We focus on implementation in RStudio in these notes. Similar instructions for Jupyter are forthcoming.\n\nIf you are using RStudio, you must check if Quarto is recognized in RStudio: Open RStudio and run:\nquarto::quarto_path()\nIf it returns a file path, it means RStudio can detect Quarto. An optional step is to install the Quarto R helper package. This allows you to render (i.e., compile) the document using point-and-click functions in RStudio’s GUI as well as other integration features.\n\ninstalled.packages(\"quarto\")\n\n\nVerify installation of Quarto in the command line of your computer:\n\nquarto --version",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Create a Quarto Book</span>"
+    ]
+  },
+  {
+    "objectID": "02_Create_Quarto_Book.html#create-a-website-using-rstudio",
+    "href": "02_Create_Quarto_Book.html#create-a-website-using-rstudio",
+    "title": "2  Create a Quarto Book",
+    "section": "2.2 Create a Website Using RStudio",
+    "text": "2.2 Create a Website Using RStudio\nThe below steps show how to create a website using Quarto.\n\n2.2.1 Create a New Book Project\nThese instructions are to create a new\n\nOpen RStudio.\nGo to File &gt; New Project &gt; New Directory.\n\n\n\n\nOpen New Project…\n\n\n\n\n\nClick on New Directory\n\n\n\nChoose the project type. In these instructions, we create a Quarto book (see this book for an example). Even though it is called a “book,” it can be published as a website. Even as a website, it maintains its chapter organization.\n\nQuarto Project. The most generic type that can be specialized later into the other types.\nQuarto Website. Select this to create a website that follows traditional formatting, such as a navigation bar and site-wide theme. For example, this may be appropriate for a personal website for academics.\nQuarto Book. The output of this can also be a website (or a PDF), but the structure follows chapters. Consistent with book formatting, there is the option to create table of contents, section number, etc.\nQuarto Manuscript. This type is designed for academic papers intended for submission to journals. There are some journal-specific contents.\nQuarto Blog. This is a specific type with posts corresponding to blog organization.\n\n\n\n\n\nCreate a Quarto Book\n\n\n\nName your project and choose the location. For now, this name will be the title. You can adjust this later.\n\n\n\n\nSave the Project\n\n\n\nClick create project. After creating the project, you will see the following files:\n\n_quarto.yml: Configuration file.\nindex.qmd: Homepage (preface).\n.quarto folder: This hidden folder contains internal or cached files. If you are going to turn your project into a Git repository, add .quarto to the .gitignore.\nExample project files:\n\ncover.png: Cover that will show up on the homepage.\nintro.qmd and summary.qmd: Example chapters.\nreferences.bib and references.qmd: An example of how to format references.\n\n\n\nThe next step is to edit the configuration file.\n\n\n2.2.2 Edit the Configuration File (_quarto.yml)\nThe configuration file dictates information about the project, including the title, author, date, but also the order the chapters, bibliography information, and visual themes. Open _quarto.yml in RStudio or another text editor. Importantly, as you update the content of the chapters (e.g., summary.qmd below), you must manually add the chapters here. Follow the same indent structure, as YAML is sensitive to whitespace.\nproject:\n  type: book\n\nbook:\n  title: \"Your Title Here\"\n  author: \"Author Names\"\n  date: \"Date\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\n\nbibliography: references.bib\n\nformat:\n  html:\n    theme:\n      - cosmo\n      - brand\n  pdf:\n    documentclass: scrreprt\n\neditor: visual\nSee Quarto Project Basics to learn how the files interact with each other. This chapter explains each element of the configuration file in more detail.\n\n\n2.2.3 Homepage (index.qmd)\nWrite your preface in index.qmd. This is the first page that will appear once you publish the book. The body of the document can contain whatever content you wish. Just make sure the following line is the first line:\n# Preface {.unnumbered}\nIf you want to include a cover, save a new cover.png with your preferred image. This will appear on the homepage. Add the options cover-image and cover-image-alt to _quarto.yml under book, following the indentation rules.\n\nbook:\n  cover-image: cover.png\n  cover-image-alt: \"alternative text for cover\"\n\n\n2.2.4 References\nUse your preferred method to generate a BibTeX bibliography called reference.bib. If you rename the file, change it in _quarto.yml. This chapter includes more information on editing references.qmd.\n\n\n2.2.5 Render the Book\nWhile adding content to the chapters (.qmd files), you can preview the book by rendering it. There are two main ways to render the book.\nThe first option is to use the command line of your computer. Navigate to the book’s directory and run:\nquarto render\nIf you want to render to a PDF, run:\nquarto render --to pdf\nThe second option is to use the console in RStudio:\nquarto::quarto_render()",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Create a Quarto Book</span>"
+    ]
+  },
+  {
+    "objectID": "02_Create_Quarto_Book.html#convert-markdown-to-quarto",
+    "href": "02_Create_Quarto_Book.html#convert-markdown-to-quarto",
+    "title": "2  Create a Quarto Book",
+    "section": "2.3 Convert Markdown to Quarto",
+    "text": "2.3 Convert Markdown to Quarto\nThe above instructions allow you to create a new book. What if you already have materials in R Markdown format? The instructions for converting those materials to a Quarto website are in Chapter 3.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Create a Quarto Book</span>"
+    ]
+  },
+  {
+    "objectID": "02_Create_Quarto_Book.html#publish-the-quarto-book-to-a-website",
+    "href": "02_Create_Quarto_Book.html#publish-the-quarto-book-to-a-website",
+    "title": "2  Create a Quarto Book",
+    "section": "2.4 Publish the Quarto Book to a Website",
+    "text": "2.4 Publish the Quarto Book to a Website\nTo publish the book, click here to see more\nQuarto Pub\nGithub Pages\n\n\n\n2.4.1 Resources\nThese notes follow the Quarto guide closely. Another useful resource is Quarto for scientists.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Create a Quarto Book</span>"
+    ]
+  },
+  {
+    "objectID": "03_Converting_Markdown_to_Quarto.html",
+    "href": "03_Converting_Markdown_to_Quarto.html",
+    "title": "3  Creating a Quarto Book Based on R Markdown",
+    "section": "",
+    "text": "3.1 Overview: Quarto and R Markdown\nQuarto renders books using Pandoc to transform Markdown. This allows for a streamlined conversion from R Markdown to Quarto. Click here to see more.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Creating a Quarto Book Based on R Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "03_Converting_Markdown_to_Quarto.html#from-r-markdown-to-quarto",
+    "href": "03_Converting_Markdown_to_Quarto.html#from-r-markdown-to-quarto",
+    "title": "3  Creating a Quarto Book Based on R Markdown",
+    "section": "3.2 From R Markdown to Quarto",
+    "text": "3.2 From R Markdown to Quarto\nSuppose you already have content organized in R Markdown files and want to convert and gather them to create a book, website, or other output using Quart. Small changes in the syntax and directory structure allow for this conversion.\n\n3.2.1 Convert .md Files to .qmd Files\nFirst, change the file extensions from .Rmd to .qmd. Then, change the YAML headers:\n---\ntitle:\"Chapter Title Here\"\nformat: html\n---\nEnsure the folder contains index.qmd and _quarto.yml (see Chapter 2). All the .qmd files should be listed in the chapters of _quarto.yml. Render the book to preview your converted content.\n\n\n3.2.2 Syntax\nQuarto can read the majority of R Markdown syntax directly. There are some minor differences. We list them below.\n\n3.2.2.1 Code Chunks\nQuarto can read R Markdown’s code chunk syntax, but it also has its own style.\nMarkdown:\n{r, fig.cap = \"\", fig.alt= \"\"}\nplot()\nQuarto:\n{r,eval= FALSE}\n#| label: Label\n#| fig-cap: Caption\n#| fig-alt: Alternative text\nplot()\nYou can copy Markdown code chunks directly to .qmd files without changing them to the Quarto style. However, do not mix styles in the same file. If there is a mixture of styles, Quarto will only read the ones with Quarto syntax. Click here to learn more about Quarto’s Markdown basics.\n\n\n3.2.2.2 LaTeX\nIt is possible to use Quarto to render a PDF file with LaTeX syntax. Quarto uses a LaTeX engine to output PDF format file.\n\n\nMath\n\nThe LaTeX mathematical environments and syntax are supported in Quarto. You can copy LaTeX math code into a .qmd file.\n\nLaTeX Text Commands\n\nLaTeX document structure or formatting control commands are not valid in Quarto’s markdown body when converting to HTML. The reason is that Quarto is based on Pandoc Markdown, and text styles are recommended to use Markdown syntax. For example, do not use:\\textbf{} or \\textit{} in the main text. Instead, use Markdown syntax: **bold** or *italic*.\n\nReferences\n\nBe careful with the reference syntax. When you make ref, you have to rewrite them in a Quarto syntax instead of LaTeX reference commands to make sure it referred correctly. (Is in ECON470 only have 2 eqref?)\nThis table shows the relative reference commands between LaTeX and Quarto:\n\n\n\n\n\n\n\n\n\n\nLaTeX\nQuarto\nNotes\n\n\n\n\n\\label{eq:foo}\n{#eq-foo} or \\label{eqfoo}\nAdd a label to the formula at the end of the formula block or within the equation.\n\n\n\\eqref{eq:foo}\n@eq-foo\nEquation number with parentheses.\n\n\nEquation environment\n$$ E = mc^2 $$ {#eq-emc2}\n-\n\n\n\\ref{fig:bar}\n@fig-bar\nReference a figure.\n\n\nFigure environment\n![Caption](figure.png){#fig-energy}\n-\n\n\n\\ref{tbl:baz}\n@tbl-baz\nReference a table.\n\n\nTable environment\nCaption {#tbl-sample}\n-\n\n\n\\ref{sec:qux}\n@sec-qux\nReferece a section.\n\n\n\\section{Methods}\n## Methods {#sec-methods}\n-\n\n\n\\cite{key}\n[@key] or @key\nCitations of literature should be preceded by @ or [@] (in parentheses).\n\n\n\\autoref{fig:bar}/\\ref{fig:bar}\nFigure @fig-bar\nAutomatically prefix the name by directly writing Figure followed by @.\n\n\n\\nameref{sec:qux}\n\\@ref(sec-qux)\nIn Pandoc, you can use \\@ref() to get a hyperlink and title text (optional).\n\n\n\\pageref{}\n-\nQuarto does not support page number references.\n\n\n\n\n\nClick here to see more about in-text references in Quarto.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Creating a Quarto Book Based on R Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "04_Color_Contrast.html",
+    "href": "04_Color_Contrast.html",
+    "title": "4  Color Contrast",
+    "section": "",
+    "text": "4.1 Ensure Accessible Color Contrast\nColor contrast is essential for users with visual impairments. Making sufficient color contrast between text and background ensures the content is readable.\nFor HTML output (this also includes HTML documents rendered by R Markdown), you can improve color contrast by setting appropriate themes and writing a custom .css file.\nPrompt: Please generate a CSS (or SCSS) file that improves color contrast to meet WCAG AA standards for my HTML webpage. Here are the specific contrast issues I need to fix: [include issues from accessibility checker]",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Color Contrast</span>"
+    ]
+  },
+  {
+    "objectID": "04_Color_Contrast.html#color_contrast",
+    "href": "04_Color_Contrast.html#color_contrast",
+    "title": "4  Color Contrast",
+    "section": "",
+    "text": "Start by selecting a theme and syntax highlighting style that meet accessibility standards in Markdown and Quarto. Here are some recommended YAML settings:\n\nformat:\n  html:\n  theme: cosmo            # Good general theme with contrast\n  highlight-style: github #Accessible code block colors\n\nAfter setting up your file, check if it passes accessibility standards using accessibility check tools.\nIf the accessibility checkers still report color contrast issues, override the wrong colors by using a custom style sheet. Below is some example code. To write this file, we referred to Rfor econometrics and used ChatGPT to meet contrast requirements. You can use AI tools to generate CSS code that meets color contrast standards with the below prompt.\n\n\n/*-- css:set defaults color --*/\n\n$primary: #004c99 !default;\n$font-size-root: 18px !default;\n\n/*-- css: sidebar settings --*/\n\n.sidebar-title {\n  color: #004c99;\n}\n\ndiv.sidebar-item-container .active {\n  font-weight: bold;\n}\n\n\n.sidebar nav[role=doc-toc] ul&gt;li&gt;a.active, .sidebar nav[role=doc-toc] ul&gt;li&gt;ul&gt;li&gt;a.active{\n  font-weight: bold;\n}\n\n/* toc section number */\n[id^=\"toc-\"] .header-section-number {\n  color: ;\n}\n\n#toc-prerequisites a.active .header-section-number {\n  color: $primary;\n}\n\n/* main header section number */\nh3 .header-section-number,\nh4 .header-section-number,\nh5 .header-section-number,\nh6 .header-section-number{\n  color: #666666;\n}\n\n\n/* Code */\n\ncode {\n  color: #373a3c;\n}\n\ncode a:any-link {\n  text-decoration: underline;\n  text-decoration-color: #ccc;\n}\n\npre {\n  background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);\n}\n\n\nul {\n  list-style-type: disc;\n}\n\n4.1.1 Resources\nTheme and Highlighting Style Resources: Quarto HTML Themes Syntax Highlighting Styles.\nCustom Style Sheet Resources: CSS color reference WebAIM color contrast checker.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Color Contrast</span>"
+    ]
+  },
+  {
+    "objectID": "05_Structure.html",
+    "href": "05_Structure.html",
+    "title": "5  Structure",
+    "section": "",
+    "text": "5.1 Introcution\nIn digital accessibility, clear structure is essential. This includes:\nBoth are required to make content accessible.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Structure</span>"
+    ]
+  },
+  {
+    "objectID": "05_Structure.html#structure",
+    "href": "05_Structure.html#structure",
+    "title": "5  Structure",
+    "section": "",
+    "text": "Logical structure. Well-organized content using clear headings, paragraphs and logical flow of text.\nSemantic structure. Correct use of HTML or PDF tags that describe the meaning and role of each element.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Structure</span>"
+    ]
+  },
+  {
+    "objectID": "05_Structure.html#logical-structure",
+    "href": "05_Structure.html#logical-structure",
+    "title": "5  Structure",
+    "section": "5.2 Logical structure",
+    "text": "5.2 Logical structure\n\nOrder content in a clear and logical order.\nAdd appropriate heading level syntax (eg. #,##) to each section, and number the content if needed for clearer structure.\nAfter generating output, check if headings follow right logical order. Avoid skipped levels (eg. jumping from H1 to H3) or placing a higher-level heading inside lower-level one.\nUse tools to verify that headings and overall structure follow logical rule. Make andy suggested corrections\n\n\n5.2.1 Heading Syntax\nIn Quarto, there are six heading levels.\n# Heading level 1\n## Heading level 2\n### Heading level 3\n#### Heading level 4\n##### Heading level 5\n###### Heading level 6",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Structure</span>"
+    ]
+  },
+  {
+    "objectID": "05_Structure.html#structure-semantic",
+    "href": "05_Structure.html#structure-semantic",
+    "title": "5  Structure",
+    "section": "5.3 Semantic Structure",
+    "text": "5.3 Semantic Structure\nSemantic structure uses proper markup to describe function or role of content elements, making it easier for screen readers to interpret them correctly. The below table shows the tags for HTML and PDF documents. Because these are not immediately evident for those who do not use screen readers, use tools to check that they are in place. Rendering an output in Quarto will result in the proper semantic structure.\n\n\n\nStructure Syntax",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Structure</span>"
+    ]
+  },
+  {
+    "objectID": "06_Alt_Text.html",
+    "href": "06_Alt_Text.html",
+    "title": "6  Alternative Text",
+    "section": "",
+    "text": "6.1 What is Alternative Text?\nAlternative text, or “alt text,” describes images for users with visual impairments. Screen readers use alt text to convey the meaning of images. You have to include alternative text for every image to meet digital accessibility standards.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Alternative Text</span>"
+    ]
+  },
+  {
+    "objectID": "06_Alt_Text.html#how-to-generate-alt-text-for-images",
+    "href": "06_Alt_Text.html#how-to-generate-alt-text-for-images",
+    "title": "6  Alternative Text",
+    "section": "6.2 How to Generate Alt Text for Images",
+    "text": "6.2 How to Generate Alt Text for Images\nBefore you start creating alt text, keep in mind the that the goal is to clearly describe the essential content of the image. Keep the text short and clear. It should be enough for a screen reader to read without excessive detail. Try not to repeat nearby text, such as a caption. It is also unnecessary to use phrases such as “image of…” or “graphic showing…”\nThere are several ways to add alternative text to image in Quarto (and R Markdown).\nFor external images that are loaded, add the alt text in square brackets.\n![alt text descrption](image.png)\nFor plots created with R code, add the fig.alt option to the brackets defining the code chunk in R Markdown.\n{r, fig.alt=\"alt text description\"}\nggplot\nIf using Quarto format, add the fig-alt option.\n#| fig-alt: \"alt text\"\nknitr::include_graphics()\nFor the cover of the book, add the following options the book section of _quarto.yml.\nbook:\n  cover-image: cover.png\n  cover-image-alt: \"alt text description\"\n\n6.2.1 Tip: Use AI to Draft Alt Text\nYou can ask generative AI to help generate alt text for you.\nPrompt: Please generate alternative text for this image. It must follow the WCAG standard. Use the provided context or code if available. Keep it short and focused on the essential meaning of the image. Do not exceed the recommended character limit.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Alternative Text</span>"
+    ]
+  },
+  {
+    "objectID": "06_Alt_Text.html#resources",
+    "href": "06_Alt_Text.html#resources",
+    "title": "6  Alternative Text",
+    "section": "6.3 Resources",
+    "text": "6.3 Resources\nR Markdown and Quarto resources:\n\nQuarto: Alternative Text for Figures\nR Markdown Alt Text improvement\n\nAlt text guidelines:\n\nWCAG Explanation\nWCAG 2.2 Quick Reference WebAIM Alt Text Guide.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Alternative Text</span>"
+    ]
+  },
+  {
+    "objectID": "07_Math.html",
+    "href": "07_Math.html",
+    "title": "7  Accessible Math in HTML",
+    "section": "",
+    "text": "7.1 Introduction\nWhen LaTeX math is rendered properly in HTML, most modern screen readers can read the content as mathematical expressions, not just as plain text.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Accessible Math in HTML</span>"
+    ]
+  },
+  {
+    "objectID": "07_Math.html#math_1",
+    "href": "07_Math.html#math_1",
+    "title": "7  Accessible Math in HTML",
+    "section": "",
+    "text": "Write math expression using valid LaTeX syntax. For inline math, use:$x^2 + y^2 = z^2$. For block math, use: `\\[E = mc^2\\].\nConfigure your Quarto (or R Markdown) file to use Mathjax to compile the math in yml file:\n\nformat:\n  html:\n    math: mathjax\n\nWhen the output is generated, review all math expressions to ensure they are rendered properly. If an expression fails, make sure you are using correct syntax in your math code. If that still does not work, you can experiment with a different rendering engine, such as MathML.",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Accessible Math in HTML</span>"
+    ]
+  },
+  {
+    "objectID": "07_Math.html#verify-that-the-math-is-accessible",
+    "href": "07_Math.html#verify-that-the-math-is-accessible",
+    "title": "7  Accessible Math in HTML",
+    "section": "7.2 Verify that the Math is Accessible",
+    "text": "7.2 Verify that the Math is Accessible\nThere are two simple ways to check if the math content is accessible.\n\nTest with a screen reader. If the screen reader reads “equation,” “x squared,” etc. then it is working correctly.\n\n\nJaws\nNVDA\n\n\nInspect the HTML page. Open check tools or Elements in your browser and check for &lt;math&gt; elements, role= \"math\", or aria-label=\"...\" attributes. These are signs that MathJax has rendered the math in an accessible way. You can switch to Accessibility tree with semantic structure to inspect for accessibility.\n\n\n\n\nMath Tags in HTML\n\n\n\n\n\nMath Tags in HTML DOM Tree",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Accessible Math in HTML</span>"
+    ]
+  },
+  {
+    "objectID": "08_ARIA_label.html",
+    "href": "08_ARIA_label.html",
+    "title": "8  ARIA",
+    "section": "",
+    "text": "8.1 Introduction\nAccessible Rich Internet Applications, or ARIA, define ways to make the web more accessible. ARIA provides semantics to non-semantic HTML for those who use assistive technology and makes sense of the interfaces being presented properly, using ARIA role, state, and property. This description is based on this resource. Click here to know more about ARIA",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ARIA</span>"
+    ]
+  },
+  {
+    "objectID": "08_ARIA_label.html#workflow",
+    "href": "08_ARIA_label.html#workflow",
+    "title": "8  ARIA",
+    "section": "8.2 Workflow",
+    "text": "8.2 Workflow\n\nUse tools to check if there are missing ARIA elements.\nIf there ARIA elements are missing, add them to the HTML file.\n\nBelow is a example of missing accessible name of ARIA label\n`Issues: X Empty form label’\nCode:\n&lt;script&gt;\n// This script is used to dynamically set the aria-label attribute for elements\ndocument.addEventListener('DOMContentLoaded', function() {\n    // Set aria-label for the label element if it is empty\n    const label = document.querySelector('label.aa-Label[for^=\"autocomplete-0-input\"]');\n    // Check if the label exists and is empty\n    if (label && !label.textContent.trim()){\n        label.setAttribute('aria-label', 'Search');\n    }\n}); \n&lt;/script&gt;\nYou can instruct AI to create html command to fix issues.\nPrompt: `Please write HTML code to fix the missing ARIA (or other issues). And attach with issues found by accessibility check tools.’\n\nNote: If you use Quarto to create the content, you can put the .html file in yaml.\n\nformat:\n  html:\n    include-in-header: \n       - aria.html",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ARIA</span>"
+    ]
+  },
+  {
+    "objectID": "08_ARIA_label.html#resources",
+    "href": "08_ARIA_label.html#resources",
+    "title": "8  ARIA",
+    "section": "8.3 Resources",
+    "text": "8.3 Resources\nTo learn more about ARIA and ARIA label, here are some resources might be helpful:\n\nARIA guides\nARIA\nWAI-ARIA\nARIA label",
+    "crumbs": [
+      "Generate An Accessible Quarto Book",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>ARIA</span>"
+    ]
+  },
+  {
+    "objectID": "09_Checklist_for_LaTeX_Accessibility.html",
+    "href": "09_Checklist_for_LaTeX_Accessibility.html",
+    "title": "9  Checklist for LaTeX Accessibility",
+    "section": "",
+    "text": "LaTeX compiles to PDFs, which can have accessibility issues such as lack of tagging, improper structure, or incompatibility with screen readers. There are expected updates to help ease making LaTeX-compiled PDFs fully compliant.\n\nInclude additional packages and commands for LaTeX: Article Accessibility. If you are converting a Beamer document, see LaTeX: Beamer Accessibility\nCheck through the common Accessibility Issues to ensure that the end product is accessible.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Checklist for LaTeX Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html",
+    "href": "10_Converting_Article.html",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "",
+    "text": "10.1 Introduction\nThe package tagpdf is an experimental package for creating tagged PDFs to meet the accessibility requirements. See Structure for more information on how the semantic structure of documents contributes to accessibility. Currently, this package does not work with the beamer class. Eventually, this package will disappear and the baseline LaTeX distributions will include the same functionality. For now, including tagpdf can improve the accessibility of LaTeX-compiled documents.\nThis chapter focuses on creating an accessible document using tagpdf. There are other options, including the accessibility package, which includes similar approaches.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#basic-setup",
+    "href": "10_Converting_Article.html#basic-setup",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.2 Basic Setup",
+    "text": "10.2 Basic Setup\n\nBefore you start, ensure that you have the latest version of LaTeX installed on your computer. Use a LaTeX distribution from 2024, preferably one from 2025. You will also want to use the LuaLaTeX engine to compile (rather than, say, pdfLaTeX). There are frequent updates to tagpdf given the evolution of LaTeX accessibility efforts. If you encounter issues, it may be wise to check that you have the latest version from CTAN - tagpdf, or follow the issues in GitHub.\nAdd code to setup tagging at the beginning of the document. This should be the first line of the file. It will generate a tag structure for the document. This code example is from The Tagging Project.\n\n\n\\DocumentMetadata{\n  lang        = en-US,     % Sets the document language to English.\n  pdfstandard = ua-2,     % Specifies the PDF accessibility standard (PDF/UA-2)\n  pdfversion = 2.0, % Updated PDF versions have better accessibility features\n  tagging=on,     % Enables PDF tagging for structure and accessibility\n  tagging-setup={math/setup=mathml-SE} % Configures math tagging using MathML structured expressions\n}\n\n\\documentclass{article}\n\\begin{document}\n\n\n\\end{document}",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#figures",
+    "href": "10_Converting_Article.html#figures",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.3 Figures",
+    "text": "10.3 Figures\nThe DocumentMetadata code at the beginning of the document takes care of a lot of the tagging requirements. There are some additional steps to ensure accessibility. For figures, include alternative text, or “alt text.” See (Alternative Text)[#alt_text] for more information on alt text. It is standard to keep the alt text concise, for example under 150 characters.\n\n\\includegraphics[width=\\textwidth,alt={alt text description}]{graph.jpg}",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#tables",
+    "href": "10_Converting_Article.html#tables",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.4 Tables",
+    "text": "10.4 Tables\nFor the tabular environment, you must identify the header rows using \\tagpdfsetup. Here is an example from (The Tagging Project)[https://latex3.github.io/tagging-project/documentation/prototype-usage-instructions]. At this point, merged columns and rows, such as those using \\multicolumn are not fully accessible.\n\n\n\\tagpdfsetup{table/header-rows={1,2}}\n\\begin{tabular}{lr}\n  Example & \\\\\n    Name&Value\\\\\n    This& 11 \\\\\n    That & 2\n\\end{tabular}\n\nSometimes, tables are useful in LaTeX to arrange information, rather than to formally present information as a table with headers. If so, use \\tagpdfsetup{table/tagging=presentation} instead.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#lists",
+    "href": "10_Converting_Article.html#lists",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.5 Lists",
+    "text": "10.5 Lists\nCommon list environments do not require additional tagging with the tagpdf package.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#math",
+    "href": "10_Converting_Article.html#math",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.6 Math",
+    "text": "10.6 Math\nFor math, it is easiest to use LuaLaTeX to rely on MathML to display the math in the PDF. Once you set tagging-setup={math/setup=mathml-SE} in the DocumentMetadata command at the top of the LaTeX document, the tagpdf package will tag the equations appropriately.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#structure",
+    "href": "10_Converting_Article.html#structure",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.7 Structure",
+    "text": "10.7 Structure\nFollow conventions laid out in (Structure)[#structure]. For example, do not skip heading levels (\\subsection to \\subsubsubsection). Also, follow common conventions, such as using \\title{} to define the title of the document.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "10_Converting_Article.html#resources",
+    "href": "10_Converting_Article.html#resources",
+    "title": "10  LaTeX: Article Accessibility",
+    "section": "10.8 Resources",
+    "text": "10.8 Resources\nDocumentation for tagpdf\nGitHub for tagpdf\nStackExchange for tagpdf",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>LaTeX: Article Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "11_Converting_Beamer.html",
+    "href": "11_Converting_Beamer.html",
+    "title": "11  LaTeX: Beamer Accessibility",
+    "section": "",
+    "text": "11.1 Convert Beamer to Article\nCurrently, beamer has limited support for accessibility. One option is to convert a beamer document to an article class and then use the tagpdf to add accessibility tags. Another option is to compile it to HTML instead of PDF, which allows for more accessible web content. A newer method is to use the ltx-talk class, which works with beamer-style commands like \\begin{frame} and also supports tagpdf. This gives you more flexibility while still improving accessibility.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>LaTeX: Beamer Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "11_Converting_Beamer.html#c_beamer",
+    "href": "11_Converting_Beamer.html#c_beamer",
+    "title": "11  LaTeX: Beamer Accessibility",
+    "section": "",
+    "text": "11.1.1 Instructions\nWhen converting a Beamer presentation to an article, it is best to do it manually to make sure the structure is clear and logical. Beamer and article have different layouts, so some parts of the code will not work in the article format.\nBeamer commands that are not compatible with article:\n\\begin{frame}...\\end{frame}\n\\frametitle{...}\n\\framesubtitle{...}\n\\pause\n\\alert{...}\n\\only{...}\n\\visible{...}\nOverlay specifications like &lt;1-&gt;\n\n\n11.1.2 Tips\nReplace each \\begin{frame} block with a section or paragraph.\nUse \\section or \\subsection to mark the structure.\nConvert slide titles (\\frametitle) into section headers or bold text.\nRemove overlay commands (\\pause, &lt;1-&gt;,etc.) as they are not meaningful in articles.\nKeep the logical order of content and avoid slide based thinking write in continuous text.\n\n\n11.1.3 tagpdf\nOnce you have converted the Beamer file to an article format, you can use tagpdf to meet accessibility requirements.\nSee tagpdf",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>LaTeX: Beamer Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "11_Converting_Beamer.html#convert-beamer-to-html",
+    "href": "11_Converting_Beamer.html#convert-beamer-to-html",
+    "title": "11  LaTeX: Beamer Accessibility",
+    "section": "11.2 Convert Beamer to HTML",
+    "text": "11.2 Convert Beamer to HTML\nYou can convert LaTeX documents into HTML using one of the following tools:\n1.Pandoc\n2.TeX4ht\n3.LaTeXML\nWe’ll introduce how to use Pandoc to convert mainly.\n\n11.2.1 Pandoc\n\n11.2.1.1 Before starting convert\nMake sure your .tex file is ready: Use proper heading levels(\\section,\\subsection, no skipping levels) Add Alt Text to all images Set up tables correctly (avoid using layout tables) Handle unsupported math symbols for MathJax MathJax limits If it’s convenient, convert all TikZ graphics to image format to avoid HTML rendering issues\n\n\n11.2.1.2 Installation\nClick here to install Pandoc\n\n\n11.2.1.3 Environment Setup\nUse Bash or any shell environment.\nYou can write a script to convert multiple files in a project.\n\n\n11.2.1.4 Write your conversion script\nThe Example code shown below converts a whole LaTeX files project to HTML files\nExample code (Bash)\n#!/bin/bash\n\n# Define folders\nFOLDER=\"your file path\"\nOUTPUT_FOLDER=\"output file path\"\n\n# Create output folder if it doesn't exist\nmkdir -p \"$OUTPUT_FOLDER\"\n\n# Define bibliography path\nBIB_PATH=\"your reference file\"\n\n# Loop through all .tex files recursively\nfind \"$FOLDER\" -type f -name \"*.tex\" | while read file; do\n    # Get path relative to root folder\n    rel_path=\"${file#$FOLDER/}\"\n    rel_dir=$(dirname \"$rel_path\")\n    filename=$(basename \"$file\" .tex)\n\n    # Make corresponding output directory\n    mkdir -p \"$OUTPUT_FOLDER/$rel_dir\"\n   \n    # get the directory of the .tex file\n    file_dir=$(dirname \"$file\")\n\n    #run pandoc inside .tex file's folder\n    ( cd \"$file_dir\" \n    \n    # Convert to HTML with math, citations, figures, LaTeX style HTML settings (CSS) \n    pandoc \"$file\" -s -o \"$OUTPUT_FOLDER/$rel_dir/$filename.html\" --mathjax --citeproc --bibliography=\"$BIB_PATH\" --extract-media=\"$OUTPUT_FOLDER/$rel_dir\" --css=../../style.css --metadata=lang:en\n\n    # Convert to Markdown \n    pandoc \"$file\" -t markdown -s -o \"$OUTPUT_FOLDER/$rel_dir/$filename.md\"\n    )\ndone\n\necho \"All files have been converted to HTML and saved in $OUTPUT_FOLDER\"\n\n\n11.2.1.5 Important Notes\n1 Math: Add Pandoc option --mathjax to support math render in HTML so that Math expression could be properly shown by HTML\nPandoc .tex -s -o .html --mathjax\n2 Figures & Graphs:\nWhen you generate figures&graphs, remember use .png or .jpg, not .pdf (HTML can’t read PDF picture). If you use PDF to show figures, please convert them into picture format first.\nAdd alt text to all images. See Alt Text to add alt text for figures.\n3 TikZ:\nTikZ is Not supported in HTML directly\n\nConvert TikZ contents to pictures first, then plug them back to LaTeX file\nUse standlone\nConvert TikZ picture to SVG form.\n\nResources: Covert LaTeX document containing TikZ pictures’ discussion\ncovert Tikz discussion TikZJax(covert script tags(containing TikZ code) into SVGs)\n4 Citations:\nYou need to add 2 Pandoc citation options to convert LaTeX citations into readable citations in HTML output:\n# Convert to HTML\n    pandoc \"$file\" -s -o \"$OUTPUT_FOLDER/$rel_dir/$filename.html\" --citeproc --bibliography=\"$BIB_PATH\"  \nPandoc Manual - Citations\n5.Layout:\nYou can use this CSS to get LaTeX-style HTML: LaTeX.css\n\nConvert to markdown files\n\nConvert original LaTeX files to markdown files is not necessary, but it may make it easier to fix certain accessibility issues by using markdown than handling directly in LaTeX.\npandoc \"$file\" -t markdown -s -o \"$OUTPUT_FOLDER/$rel_dir/$filename.md\"\n\n\n\n11.2.2 TeX4ht\nTeX4ht is another tool to convert LaTeX file to HTML.\nTeX4ht\n\n\n11.2.3 LaTeXML\nLaTeXML could also convert LaTeX file to HTML.\nLaTeXML",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>LaTeX: Beamer Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "11_Converting_Beamer.html#convert-beamer-to-itk-talk",
+    "href": "11_Converting_Beamer.html#convert-beamer-to-itk-talk",
+    "title": "11  LaTeX: Beamer Accessibility",
+    "section": "11.3 Convert Beamer to Itk-talk",
+    "text": "11.3 Convert Beamer to Itk-talk\nItk-talk is not released yet.\n…..",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>LaTeX: Beamer Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "11_Converting_Beamer.html#resources",
+    "href": "11_Converting_Beamer.html#resources",
+    "title": "11  LaTeX: Beamer Accessibility",
+    "section": "11.4 Resources",
+    "text": "11.4 Resources\n(Here is some discussions about converting LaTeX file to HTML)\nConverting LaTeX to HTML: technical notes\nPandoc\nMathjax",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>LaTeX: Beamer Accessibility</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html",
+    "href": "LaTeX_Accessibility_Issues.html",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "",
+    "text": "12.1 Structure\nThere are the common accessibility issues in LaTeX. They can be detected by PDF Accessibility Check tools.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#l_structure",
+    "href": "LaTeX_Accessibility_Issues.html#l_structure",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "",
+    "text": "12.1.1 logical structure\nWhen writing a LaTeX file, It’s important to organize the content in a clear and logical order. Tools like tagpdf will tag the document with appropriate logical and semantic structure within the proper writing order.\nCode\n\\section{} %first heading level\n\\subsection{} %second heading level\n\\subsubsection{} %third heading level\n\\paragraph{} %fourth heading level\n\\subparagraph{}\n\n\n12.1.2 Tagged structure\nStandard LaTeX doesn’t automatically produce tagged PDFs that meet accessibility standards.A typical LaTeX PDF doesn’t included information like “This is a heading” etc. so screen readers can’t understand the logical structure of the document. We could address this issue by using tagpdf. tagpdf generates tag tree for your document. Click tagpdf to see it’s instructions and details.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#l_color",
+    "href": "LaTeX_Accessibility_Issues.html#l_color",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "12.2 Color Contrast",
+    "text": "12.2 Color Contrast\nIn files generated using LaTeX, most of the time, color contrast meets accessibility standards. If you need to set your own colors, please refer to: Colors in LaTeX",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#l_alt",
+    "href": "LaTeX_Accessibility_Issues.html#l_alt",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "12.3 Alt Text",
+    "text": "12.3 Alt Text\nIn Latex, you can insert alternative text using alt inside \\\\includegraphics. And make sure to use tagpdf with it for accessibility.\n\\includegraphics[alt={alt text}]{image.png}\n\n12.3.1 Use AI to help generate alt text\nYou can ask generative AI to help generate alt text for you!\nPrompt: Please generate alternative text for this image. It must follow the WCAG standard. Use the provided context or code if available. Keep it short and focused on the essential meaning of the image. Do not exceed the recommended character limit.",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#l_table",
+    "href": "LaTeX_Accessibility_Issues.html#l_table",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "12.4 Table",
+    "text": "12.4 Table",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#l_math",
+    "href": "LaTeX_Accessibility_Issues.html#l_math",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "12.5 Accessible Math",
+    "text": "12.5 Accessible Math\nTo make sure math content meets digital accessibility standards:\nUse correct LaTeX math syntax. Always write math using \\( ... \\) or \\[ ... \\] instead of faking it with text formatting. Screen readers rely on this structure.\nAnd there are two ways to create accessible math content:\n\n12.5.1 tagpdf\nWhen using tagpdf: Use the latest setup to correctly tag math formulas for PDF accessibility. See setup guide here: tagpdf usage instruction\n\n\n12.5.2 Provide LaTeX math in HTML\nWhen converting to HTML: Use tools like MathJax to render math correctly. This allows screen readers to detect and read equations. See MathJax\nHere are some resources about how to make accessible math through HTML: Accessible Mathematics\nConverting LaTeX to HTML: technical notes\nAccessible textbook in Math",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "LaTeX_Accessibility_Issues.html#tikz",
+    "href": "LaTeX_Accessibility_Issues.html#tikz",
+    "title": "12  LaTeX Accessibility Issues Checklist",
+    "section": "12.6 TikZ",
+    "text": "12.6 TikZ\nTikZ needs to be manually tagged by generating tag code and bring alt text:\nSee Accessible TikZ with tagpdf to know more if you use tagpdf to generate accessible LaTeX files.\nSee converting TikZ to HTML readable format",
+    "crumbs": [
+      "Generate Accessible PDF from LaTeX",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>LaTeX Accessibility Issues Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "Accessibility_Issue_Checklist.html",
+    "href": "Accessibility_Issue_Checklist.html",
+    "title": "13  Accessibility Issue Checklist",
+    "section": "",
+    "text": "Accessibility Checker\nAccessibility Issues fast trace",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Accessibility Issue Checklist</span>"
+    ]
+  },
+  {
+    "objectID": "Accessibility_Checker.html",
+    "href": "Accessibility_Checker.html",
+    "title": "14  Accessibility Check Tools",
+    "section": "",
+    "text": "14.1 Check for Digital Accessibility Issues\nOnce your files are complete, run accessibility checks using the tools below to identify and fix potential issues.",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Accessibility Check Tools</span>"
+    ]
+  },
+  {
+    "objectID": "Accessibility_Checker.html#html-accessibility-check-tools",
+    "href": "Accessibility_Checker.html#html-accessibility-check-tools",
+    "title": "14  Accessibility Check Tools",
+    "section": "14.2 HTML Accessibility Check Tools",
+    "text": "14.2 HTML Accessibility Check Tools\n\n14.2.1 WAVE\nRecommened tool - covers a wide range of accessibility checks. And it’s visualized, offering code(you can click code in the issues to see it’s relative code and reference to see the details(include it’s meaning, how to fix it, algorithm in English and Standards and Guidelines which are very helpful for you to understand the issues and it’s relative solutions) of those Alerts or Error)\n\nInstall: Click here to add the WAVE browser extension\nHow to Use:\n\n\nOpen the HTML file you want to check\nOpen Developer Tools, Press Ctrl + Shift + I or Right click the page and choose “WAVE this page” \nExplore WAVE: Watch the offical walkthrough by clicking here\n\nSummary:\nDetails:\nReference:\n\nIf you’re checking a local HTML file, you must allow WAVE to access local files: Open your browser’s Extensions page → Click Manage Extensions → Find WAVE and click Details → Toggle on “Allow access to file URLs”\n\n\n\n\nAllow full access to local HTML files\n\n\n\n\n14.2.2 axe DevTools Another accessibility checker, integrated into browser dev tools.\n\nInstall: Search for “axe DevTools” in the Chrome Web Store and add the extension.\nHow to Use:\n\n\n\nRight-click your page and select Inspect\nIn Developer Tools, go to the “axe DevTools” tab and then choose Scan full page  \nIf you’re checking local HTML file, make sure to allow axe DevTools to access file URLs - same process as WAVE.\n\n\n\n14.2.3 YuJa Panorama\n…….\n\n\n14.2.4 Other Tools\n1.Accessibility Insights fo Web Accessibility Insights for Web is a brower extension developed by Microsoft to evaluate web accessibility. It offers fast automated checks and guided manual assessments. Website\n2.ARC Toolkit ARC Toolkit is a Chrome Developer Tools extension for auditing web accessibility. It supports manual inspection of HTML structure, ARIA attributes,a and color contrast. Available on the Chrome Web Store.\n3.tota11y tota11y is a visual accessibility tool. It overlays visual indicators on web pages to help identify accessibility issues like headings, alt text, and labels. Website\n\n\n14.2.5 Notes\nTo learn how to fix each issue, please go to corresponding section.",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Accessibility Check Tools</span>"
+    ]
+  },
+  {
+    "objectID": "Accessibility_Checker.html#pdf-accessibility-check",
+    "href": "Accessibility_Checker.html#pdf-accessibility-check",
+    "title": "14  Accessibility Check Tools",
+    "section": "14.3 PDF Accessibility Check",
+    "text": "14.3 PDF Accessibility Check\n\n14.3.1 Adobe Acrobat\nIf you’re working with PDF files, use Adobe Acrobat’s Accessibility Checker to identify and fix accessibility issues.\n\nRun Accessibility Checker in Adobe Acrobat\n\nSteps:\n\nOpen your PDF in Adobe Acrobat\nGo to the Tools tab and find Accessibility Check\nClick Start Checking\n\n\n\n\nsee report\n\n\nA report will appear on the left showing all issues\n\nView and understand issues\n\nTo check the details of each issue: Click on the issues listed in the report panel\n\n\n\nAdobe Accessibility Report\n\n\nRight-click to see more options.\nClick Explain to read the official Adobe explanation\nClick Show in Tags Panel & Content Panel to view details\n\n\n\ntags panel\n\n\nTo learn how to fix each issue, please go to corresponding section.\n\n14.3.1.1 Resources:\nAdobe Acrobat: Accessibility, tags and reflow\n\n\n\n14.3.2 PAC Accessibility Checker\nClick here to download\n\n\n14.3.3 Learn to use Elements\nElements is a developer tool built in your browser. Elements is not strictly could considered as accessibility check tools, but It’s a very powerful tool for you to access and debug accessibility issues.\nThere’s 2 mode of Element: the normal one and the accessibility panel. We recommend you to use accessibility panel directly to inspect elements.\nThe Elements panel presents every part of wbepage, which include tag, contents, styles etc. Developer could use it to check the page’s structure, function, etc. And Accessibility panel shows whole accessibility tree for the page. The tag tree here is very semantic and easy to understand.You can easily read the structure and function etc for each content you wrote. Cooperate with other accessibility check tools will make you digital accessibility work efficient and accurate. (Find issues in check tools, inspect elements to find and understand the issues)\nSteps:\n\nRight click in the page you want to check\nchoose inspect\nyou can find “Element” on the right side panel, click into it.\nthen switch to “Accessibility panel” (click accessibility icon on the right head corner).\n\n\n\n\naccessibility element panel",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Accessibility Check Tools</span>"
+    ]
+  },
+  {
+    "objectID": "Issue_Check_List.html",
+    "href": "Issue_Check_List.html",
+    "title": "15  Issue check list",
+    "section": "",
+    "text": "15.1 HTML\nFor accessibility issue fast track:\nStructure\nColor Contrast\nAlt Text\nTable\nAria\nMath",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Issue check list</span>"
+    ]
+  },
+  {
+    "objectID": "Issue_Check_List.html#pdf",
+    "href": "Issue_Check_List.html#pdf",
+    "title": "15  Issue check list",
+    "section": "15.2 PDF",
+    "text": "15.2 PDF\nStructure\nColor Contrast\nAlt Text\nTable\nMath\nTikZ",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Issue check list</span>"
+    ]
+  },
+  {
+    "objectID": "TAMU_Resources.html",
+    "href": "TAMU_Resources.html",
+    "title": "16  Texas A&M Resources for Digital Accesibility",
+    "section": "",
+    "text": "List of Texas A&M Resources\nYuja Panorama\nCenter for Teaching Excellence\n\nThey offer open computer hours with student workers to help convert materials.\nThey offer trainings in Fall 2025.",
+    "crumbs": [
+      "Accessibility Tools and Resources",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Texas A&M Resources for Digital Accesibility</span>"
+    ]
+  }
+]

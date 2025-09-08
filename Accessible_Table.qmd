@@ -1,9 +1,0 @@
----
-title: "Accessible Table in HTML"
----
-
-## Resources {#Table_1}
-
-[tables tutorial](https://www.w3.org/WAI/tutorials/tables/)
-
-[creating accessible table](https://webaim.org/techniques/tables/data)
